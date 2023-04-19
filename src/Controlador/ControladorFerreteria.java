@@ -21,9 +21,7 @@ public class ControladorFerreteria {
     }
 
     public void creaCliente(Cliente nuevo){
-        clientes.add(new Cliente());
     }
     public void creaProducto(Producto nuevo){
-        productos.add(new Producto());
     }
 }

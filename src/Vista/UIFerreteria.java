@@ -30,8 +30,7 @@ public class UIFerreteria {
         System.out.print("Telefono: ");
         String telefono=sc.next();
 
-        ControladorFerreteria.getInstance().creaCliente();
-        //Cliente nuevo = new Cliente(rut, nombre, direccion, telefono); esto puede que no, muy posiblemente que NO!!!
+        Cliente nuevo = new Cliente(rut, nombre, direccion, telefono);
     }
     public static void CrearProducto(){
         System.out.println("Creando un nuevo producto");
