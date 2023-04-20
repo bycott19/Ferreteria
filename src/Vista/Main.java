@@ -5,8 +5,6 @@ public class Main {
 
             UIFerreteria.getInstance().menu();
 
-        System.out.println("Probando si cambia");
-
     }
 }
 

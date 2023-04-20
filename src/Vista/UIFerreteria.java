@@ -6,11 +6,6 @@ import Modelo.Producto;
 
 import java.util.*;
 public class UIFerreteria {
-
-    /* private final Scanner sc;
-    private UIFerreteria(){
-        sc = new Scanner(System.in);
-    }*/
     static Scanner sc= new Scanner(System.in);
     private static UIFerreteria instance = null;
     public static UIFerreteria getInstance() {
@@ -31,24 +26,41 @@ public class UIFerreteria {
         String telefono=sc.next();
 
         Cliente nuevo = new Cliente(rut, nombre, direccion, telefono);
+        ControladorFerreteria.getInstance().creaCliente(nuevo);
     }
     public static void CrearProducto(){
         System.out.println("Creando un nuevo producto");
         System.out.print("Codigo: " );
         long cod=sc.nextLong();
-        System.out.println("Marca: ");
+        System.out.print("Marca: ");
         String marca=sc.next();
         System.out.print("Descripción: ");
         String descripcion= sc.next();
         System.out.print("Precio: $");
         int precio= sc.nextInt();
         Producto nuevoProducto = new Producto(cod, marca, descripcion, precio);
+        ControladorFerreteria.getInstance().creaProducto(nuevoProducto);
     }
 
-    private void ListaProductos() {
+    private void ListaProductos(){
+        System.out.println();
+        System.out.println("***LISTADO DE PRODUCTOS****");
+        System.out.printf("%-15s %-15s %-15s %-15s %n", "Codigo", "MARCA", "DESCRIPCIÓN", "PRECIO");
+        Producto[] listaProductos = ControladorFerreteria.getInstance().listaProductos();
+        for(int i =0; i<listaProductos.length; i++){
+            System.out.printf("%-15d %-15s %-15s %-15d%n", listaProductos[i].getCodigo(), listaProductos[i].getMarca(), listaProductos[i].getDescripcion(), listaProductos[i].getPrecio());
+        }
     }
 
-    public static void ListaClientes(){}
+    public static void ListaClientes(){
+        System.out.println();
+        System.out.println("**** LISTADO DE CLIENTES ****");
+        System.out.printf("%-15s %-15s %-15s%n","RUT", "NOMBRE", "DIRECCIÓN");
+        Cliente[] listaClientes = ControladorFerreteria.getInstance().listaClientes();
+        for(int i = 0; i<listaClientes.length; i++){
+            System.out.printf("%-15s %-15s %-15s%n", listaClientes[i].getRut(), listaClientes[i].getNombre(), listaClientes[i].getDireccion());
+        }
+    }
 
     public void menu(){
         int opcion;
@@ -88,6 +100,4 @@ public class UIFerreteria {
             }
         }while (opcion != 5);
     }
-
-
 }
