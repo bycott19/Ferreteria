@@ -1,14 +1,13 @@
 package Controlador;
-
 import Modelo.Cliente;
 import Modelo.Producto;
+import Modelo.Venta;
 
 import java.util.ArrayList;
 public class ControladorFerreteria {
-    ArrayList <Cliente> clientes = new ArrayList();
-    ArrayList <Producto> productos = new ArrayList();
-
-
+    static ArrayList <Cliente> clientes = new ArrayList();
+    static ArrayList <Producto> productos = new ArrayList();
+    static ArrayList <Venta> ventas = new ArrayList();
     private static ControladorFerreteria instance = null;
 
     private ControladorFerreteria(){
@@ -48,5 +47,32 @@ public class ControladorFerreteria {
         }
         return listaProductos;
     }
+
+
+    //Nuevo avance
+    public static ArrayList<Cliente> buscarCliente(String rut){
+        for(Cliente misClientes:clientes){
+            if(misClientes.getRut().equalsIgnoreCase(rut)){
+                return clientes;
+            }
+        }
+
+        return null;
+    }
+    public static ArrayList<Producto> buscarProducto(int codProducto){
+        for(Producto misProductos:productos) {
+            if(misProductos.getCodigo()==codProducto){
+                return productos;
+            }
+        }
+        return null;
+    }
+    public void ingresarVenta(Venta nueva){
+        ventas.add(nueva);
+    }
+    public void listarVentas(){
+
+    }
+
 
 }

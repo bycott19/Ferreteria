@@ -2,23 +2,23 @@ package Modelo;
 
 public class Producto {
 
-    private long codigo;
+    private int codigo;
     private String marca;
     private String descripcion;
     private int precio;
 
-    public Producto(long codigo, String marca, String descripcion, int precio){
+    public Producto(int codigo, String marca, String descripcion, int precio){
         this.codigo = codigo;
         this.marca = marca;
         this.descripcion = descripcion;
         this.precio = precio;
     }
 
-    public long getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(long codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
