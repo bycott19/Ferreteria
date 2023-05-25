@@ -4,6 +4,7 @@ import Controlador.ControladorFerreteria;
 import Modelo.Cliente;
 import Modelo.Producto;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class UIFerreteria {
@@ -29,19 +30,51 @@ public class UIFerreteria {
     * */
 
 
-
-    public void ingresarVenta(){
+//NUEVO CODIGO
+    public void ingresarVenta() {
+        System.out.println();
+        //VERIFICAR SI EXISTEN DATOS EN EL SISTEMA, Y PARA ESPECIFICAR QUE FALTA
+        if (ControladorFerreteria.existeCliente() == null && ControladorFerreteria.existeProducto() == null) {
+            System.out.println("No existen Datos en el sistema");
+            return;
+        } else {
+            if (ControladorFerreteria.existeProducto() == null) {
+                System.out.println("No existen productos en el sistema");
+                return;
+            } else {
+                if(ControladorFerreteria.existeCliente()==null){
+                    System.out.println("No existen clientes en el sistema");
+                    return;
+                }
+            }
+        }
         int op;
-        System.out.println("Ingrese el codigo de la venta");
-        int codVenta=sc.nextInt();
         System.out.println("Ingrese el rut del cliente");
         String rut=sc.next();
+        //PARA VER SI EL RUT QUE INGRESO ESTA EN EL SISTEMA
+        while(ControladorFerreteria.buscarCliente(rut)==null){
+            System.out.println();
+            System.out.println("No existen clientes con ese rut");
+            System.out.println("Ingrese de nuevo");
+            System.out.print("RUT: ");
+            rut=sc.next();
+        }
+        System.out.println("Ingrese el codigo de la venta");
+        int codVenta=sc.nextInt();
         System.out.println("Ingrese la fecha de la venta");
         String fecha=sc.next();
 
         do{
             System.out.println("Ingrese el codigo del producto");
-            String codProducto=sc.next();
+            int codProducto=sc.nextInt();
+            //PARA VER SI EL CODIGO ESTA EN EL SISTEMA
+            while(ControladorFerreteria.buscarProducto(codProducto)==null){
+                System.out.println();
+                System.out.println("No existen productos con ese codigo");
+                System.out.println("Ingrese de nuevo: ");
+                System.out.print("Codigo producto: ");
+                codProducto=sc.nextInt();
+            }
             System.out.println("¿Añadir nuevo producto a la compra?");
             System.out.println("1- Si      2-No");
             op=sc.nextInt();
@@ -57,6 +90,7 @@ public class UIFerreteria {
 
     }
 
+    //HASTA AQUI
     public void menu(){
         int opcion;
         do {
@@ -107,9 +141,10 @@ public class UIFerreteria {
     public void CrearCliente(){
         System.out.print("Rut: ");
         String rut=sc.next();
-        if (ControladorFerreteria.buscarCliente(rut)!=null){
+        while(ControladorFerreteria.buscarCliente(rut)!=null){
             System.out.println("ERROR. Ya existe un cliente con el mismo rut");
-            return;
+            System.out.print("Rut: ");
+            rut=sc.next();
         }
         sc.nextLine();
         System.out.print("Nombre: ");
@@ -122,6 +157,10 @@ public class UIFerreteria {
         ControladorFerreteria.getInstance().creaCliente(nuevo);
     }
     public void CrearProducto(){
+
+        //AGREGUE LA CANTIDAD COMO ATRIBUTO EN LA CLASE PRODUCTO
+        //Y TAMBIEN LA AGREGUE PARA QUE LA INGRESEN AL CREAR EL PRODUCTO Y LA MOSTRE
+        //FALTA HACER QUE DISMUNUYA CUANDO SE REALIZA UNA VENTA
         boolean entrar=true;
         System.out.println("Creando un nuevo producto");
         int cod=0;
@@ -131,10 +170,14 @@ public class UIFerreteria {
             cod2=sc.next();
             try {
                 cod=Integer.parseInt(cod2);
+                while(ControladorFerreteria.buscarProducto(cod)!=null){
+                    System.out.println("Codigo ya existente");
+                    cod2=sc.next();
+                    cod=Integer.parseInt(cod2);
+                }
                 entrar=false;
             } catch (NumberFormatException e) {
                 System.out.println("Valor ingresado invalido");
-
             }
         }while (entrar);
         sc.nextLine();
@@ -158,17 +201,19 @@ public class UIFerreteria {
                 System.out.println("Ingrese de nuevo");
             }
         } while(repetir);
-        Producto nuevoProducto = new Producto(cod, marca, descripcion, prec);
+        System.out.print("Cantidad: ");
+        int cantidad=sc.nextInt();
+        Producto nuevoProducto = new Producto(cod, marca, descripcion, prec, cantidad);
         ControladorFerreteria.getInstance().creaProducto(nuevoProducto);
     }
 
     private void ListaProductos(){
         System.out.println();
         System.out.println("***LISTADO DE PRODUCTOS****");
-        System.out.printf("%-25s %-25s %-25s %-25s %n", "Codigo", "MARCA", "DESCRIPCIÓN", "PRECIO");
+        System.out.printf("%-25s %-25s %-25s %-25s %-25s %n", "Codigo", "MARCA", "DESCRIPCIÓN", "PRECIO", "CANTIDAD");
         Producto[] listaProductos = ControladorFerreteria.getInstance().listaProductos();
         for(int i =0; i<listaProductos.length; i++){
-            System.out.printf("%-25d %-25s %-25s %-25d %n", listaProductos[i].getCodigo(), listaProductos[i].getMarca(), listaProductos[i].getDescripcion(), listaProductos[i].getPrecio());
+            System.out.printf("%-25d %-25s %-25s %-25d %-25d %n", listaProductos[i].getCodigo(), listaProductos[i].getMarca(), listaProductos[i].getDescripcion(), listaProductos[i].getPrecio(), listaProductos[i].getCantidad());
         }
     }
 

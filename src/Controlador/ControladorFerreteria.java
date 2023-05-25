@@ -2,6 +2,7 @@ package Controlador;
 import Modelo.Cliente;
 import Modelo.Producto;
 import Modelo.Venta;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 public class ControladorFerreteria {
@@ -49,19 +50,34 @@ public class ControladorFerreteria {
     }
 
 
-    //Nuevo avance
+    //METODOS DE LA SEGUNDA PARTE
     public static ArrayList<Cliente> buscarCliente(String rut){
         for(Cliente misClientes:clientes){
             if(misClientes.getRut().equalsIgnoreCase(rut)){
                 return clientes;
             }
         }
-
         return null;
     }
     public static ArrayList<Producto> buscarProducto(int codProducto){
         for(Producto misProductos:productos) {
             if(misProductos.getCodigo()==codProducto){
+                return productos;
+            }
+        }
+        return null;
+    }
+    public static ArrayList<Cliente> existeCliente() {
+        for (Cliente existen : clientes) {
+            if (clientes.size()!=0) {
+                return clientes;
+            }
+        }
+        return null;
+    }
+    public static ArrayList<Producto> existeProducto(){
+        for(Producto existe : productos){
+            if(productos.size()!=0){
                 return productos;
             }
         }
