@@ -3,6 +3,7 @@ package Vista;
 import Controlador.ControladorFerreteria;
 import Modelo.Cliente;
 import Modelo.Producto;
+import Modelo.Venta;
 
 import java.sql.SQLOutput;
 import java.util.*;
@@ -89,7 +90,6 @@ public class UIFerreteria {
     public void listarVentas(){
 
     }
-
     //HASTA AQUI
     public void menu(){
         int opcion;
@@ -157,7 +157,6 @@ public class UIFerreteria {
         ControladorFerreteria.getInstance().creaCliente(nuevo);
     }
     public void CrearProducto(){
-
         //AGREGUE LA CANTIDAD COMO ATRIBUTO EN LA CLASE PRODUCTO
         //Y TAMBIEN LA AGREGUE PARA QUE LA INGRESEN AL CREAR EL PRODUCTO Y LA MOSTRE
         //FALTA HACER QUE DISMUNUYA CUANDO SE REALIZA UNA VENTA

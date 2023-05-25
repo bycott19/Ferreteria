@@ -2,7 +2,6 @@ package Controlador;
 import Modelo.Cliente;
 import Modelo.Producto;
 import Modelo.Venta;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 public class ControladorFerreteria {
@@ -23,7 +22,6 @@ public class ControladorFerreteria {
 
     public void creaCliente(Cliente nuevo){
         clientes.add(nuevo);
-
     }
     public void creaProducto(Producto nuevo){
         productos.add(nuevo);
@@ -86,9 +84,14 @@ public class ControladorFerreteria {
     public void ingresarVenta(Venta nueva){
         ventas.add(nueva);
     }
-    public void listarVentas(){
-
+    public  Venta[] listaVentas(){
+        Venta[] listaVentas = new Venta[ventas.size()];
+        int i=0;
+        for(Venta misVentas : ventas){
+            listaVentas[i] = misVentas;
+            i++;
+        }
+        return listaVentas;
     }
-
-
 }
+
