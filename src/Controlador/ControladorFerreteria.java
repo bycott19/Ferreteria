@@ -4,6 +4,8 @@ import Modelo.Producto;
 import Modelo.Venta;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
 public class ControladorFerreteria {
     static ArrayList <Cliente> clientes = new ArrayList();
     static ArrayList <Producto> productos = new ArrayList();
@@ -93,16 +95,26 @@ public class ControladorFerreteria {
         }
         return listaVentas;
     }
-    public static void cantidadProductos(int codigo, int cantidad){
+    public static Object CantidadProductos(int codigo, int cantidad){
+        int total=0;
         for(Producto misProductos: productos){
             if(cantidad>misProductos.getCantidad()){
-                System.out.println("La cantidad solicitada supera al total de inventario");
-                return;
+                return null;
             }
             if(misProductos.getCodigo() == codigo){
-                misProductos.setCantidad(misProductos.getCantidad()-cantidad);;
+                misProductos.setCantidad(misProductos.getCantidad()-cantidad);
             }
         }
+        return 0;
+    }
+    public static int totalCompra(int codigo, int cantidad){
+        int total=0;
+        for(Producto misProductos : productos){
+            if(misProductos.getCodigo() == codigo){
+                total+=(misProductos.getPrecio()*cantidad);
+            }
+        }
+        return total;
     }
 }
 

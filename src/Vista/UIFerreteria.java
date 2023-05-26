@@ -49,6 +49,7 @@ public class UIFerreteria {
                 }
             }
         }
+        int totalCompra=0;
         int op;
         System.out.println("Ingrese el rut del cliente");
         String rut=sc.next();
@@ -78,7 +79,13 @@ public class UIFerreteria {
             }
             System.out.print("Ingrese la cantidad: ");
             int cantidadProductos=sc.nextInt();
-            ControladorFerreteria.cantidadProductos(codProducto, cantidadProductos);
+            if(ControladorFerreteria.CantidadProductos(codProducto,cantidadProductos)==null){
+                System.out.println("Error, cantidad solicitada no disponible");
+                System.out.println("*****Cancelando Venta*****");
+                return;
+            }
+            //SE GUARDA EL TOTAL DE LA COMPRA ACUMULADA
+            totalCompra+=ControladorFerreteria.totalCompra(codProducto,cantidadProductos);
             System.out.println("¿Añadir nuevo producto a la compra?");
             System.out.println("1- Si      2-No");
             op=sc.nextInt();
@@ -88,9 +95,9 @@ public class UIFerreteria {
                 op=sc.nextInt();
             }
         }while(op!=2);
-
     }
     public void listarVentas(){
+        System.out.println("Aun no jiji");
 
     }
     //HASTA AQUI
@@ -133,6 +140,7 @@ public class UIFerreteria {
                         ingresarVenta();
                         break;
                     case 6:
+                        listarVentas();
                         break;
                     case 7:
                         System.out.println("Adios!!");
