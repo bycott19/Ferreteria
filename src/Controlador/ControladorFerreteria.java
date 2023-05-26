@@ -84,7 +84,7 @@ public class ControladorFerreteria {
     public void ingresarVenta(Venta nueva){
         ventas.add(nueva);
     }
-    public  Venta[] listaVentas(){
+    public  Venta[] listarVentas(){
         Venta[] listaVentas = new Venta[ventas.size()];
         int i=0;
         for(Venta misVentas : ventas){
@@ -92,6 +92,17 @@ public class ControladorFerreteria {
             i++;
         }
         return listaVentas;
+    }
+    public static void cantidadProductos(int codigo, int cantidad){
+        for(Producto misProductos: productos){
+            if(cantidad>misProductos.getCantidad()){
+                System.out.println("La cantidad solicitada supera al total de inventario");
+                return;
+            }
+            if(misProductos.getCodigo() == codigo){
+                misProductos.setCantidad(misProductos.getCantidad()-cantidad);;
+            }
+        }
     }
 }
 

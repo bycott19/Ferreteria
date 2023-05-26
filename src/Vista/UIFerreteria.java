@@ -76,6 +76,9 @@ public class UIFerreteria {
                 System.out.print("Codigo producto: ");
                 codProducto=sc.nextInt();
             }
+            System.out.print("Ingrese la cantidad: ");
+            int cantidadProductos=sc.nextInt();
+            ControladorFerreteria.cantidadProductos(codProducto, cantidadProductos);
             System.out.println("¿Añadir nuevo producto a la compra?");
             System.out.println("1- Si      2-No");
             op=sc.nextInt();
