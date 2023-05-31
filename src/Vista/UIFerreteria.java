@@ -4,8 +4,6 @@ import Controlador.ControladorFerreteria;
 import Modelo.Cliente;
 import Modelo.Producto;
 import Modelo.Venta;
-
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class UIFerreteria {
@@ -86,6 +84,10 @@ public class UIFerreteria {
             }
             //SE GUARDA EL TOTAL DE LA COMPRA ACUMULADA
             totalCompra+=ControladorFerreteria.totalCompra(codProducto,cantidadProductos);
+
+           /* Venta ventas = new Venta(codVenta,ControladorFerreteria.buscarCliente(rut),ControladorFerreteria.buscarProducto(codProducto),fecha );
+            ControladorFerreteria.getInstance().crearVenta(ventas);*/
+
             System.out.println("¿Añadir nuevo producto a la compra?");
             System.out.println("1- Si      2-No");
             op=sc.nextInt();
@@ -102,6 +104,8 @@ public class UIFerreteria {
     }
     //HASTA AQUI
     public void menu(){
+        ControladorFerreteria.getInstance().leerClientes();
+        ControladorFerreteria.getInstance().leerProductos();
         int opcion;
         do {
             System.out.println();
@@ -114,11 +118,13 @@ public class UIFerreteria {
 
             System.out.println("5.- Ingresar venta");
             System.out.println("6.- Listar ventas");
+            System.out.println("7.- Guardar Clientes");
+            System.out.println("8.- Guardar  Productos");
 
-            System.out.println("7.- Salir");
+            System.out.println("9.- Salir");
             System.out.print("Ingrese opción: ");
             opcion = sc.nextInt();
-            if (opcion < 1 || opcion > 7) {
+            if (opcion < 1 || opcion > 9) {
                 System.out.println();
                 System.out.println("ERROR... opción invalida");
                 System.out.println();
@@ -143,16 +149,23 @@ public class UIFerreteria {
                         listarVentas();
                         break;
                     case 7:
-                        System.out.println("Adios!!");
+                        ControladorFerreteria.getInstance().guardarClientes();
+                        break;
+                    case 8:
+                        ControladorFerreteria.getInstance().guardarProductos();
+                        break;
+                    case 9:
+                        cerrarPrograma();
                         break;
                 }
             }
-        }while (opcion != 7);
+        }while (opcion != 9);
     }
     public void CrearCliente(){
+        System.out.println("****Creando un nuevo cliente****");
         System.out.print("Rut: ");
         String rut=sc.next();
-        while(ControladorFerreteria.buscarCliente(rut)!=null){
+        while(ControladorFerreteria.buscarCliente(rut) != null){
             System.out.println("ERROR. Ya existe un cliente con el mismo rut");
             System.out.print("Rut: ");
             rut=sc.next();
@@ -166,13 +179,11 @@ public class UIFerreteria {
         String telefono=sc.nextLine();
         Cliente nuevo = new Cliente(rut, nombre, direccion, telefono);
         ControladorFerreteria.getInstance().creaCliente(nuevo);
+        System.out.println("Cliente creado con exito!!!!");
     }
     public void CrearProducto(){
-        //AGREGUE LA CANTIDAD COMO ATRIBUTO EN LA CLASE PRODUCTO
-        //Y TAMBIEN LA AGREGUE PARA QUE LA INGRESEN AL CREAR EL PRODUCTO Y LA MOSTRE
-        //FALTA HACER QUE DISMUNUYA CUANDO SE REALIZA UNA VENTA
         boolean entrar=true;
-        System.out.println("Creando un nuevo producto");
+        System.out.println("****Creando un nuevo producto****");
         int cod=0;
         String cod2;
         do {
@@ -215,6 +226,7 @@ public class UIFerreteria {
         int cantidad=sc.nextInt();
         Producto nuevoProducto = new Producto(cod, marca, descripcion, prec, cantidad);
         ControladorFerreteria.getInstance().creaProducto(nuevoProducto);
+        System.out.println("Producto creado con exito!!!!");
     }
 
     private void ListaProductos(){
@@ -235,5 +247,20 @@ public class UIFerreteria {
         for(int i = 0; i<listaClientes.length; i++){
             System.out.printf("%-25s %-25s %-35s %-25s %n",listaClientes[i].getRut(), listaClientes[i].getNombre(), listaClientes[i].getDireccion(), listaClientes[i].getTelefono());
         }
+    }
+    public void cerrarPrograma(){
+        int tiempoInicial = 3;
+        System.out.println("***Cerrando programa***");
+        for (int i = tiempoInicial; i >= 0; i--) {
+            System.out.print("   "+i+" ");
+            try {
+                Thread.sleep(1000); // Pausa de 1 segundo
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        System.out.println();
+        System.out.println("   ¡Programa cerrado!");
+        System.out.println("*********ADIOS*********");
     }
 }
