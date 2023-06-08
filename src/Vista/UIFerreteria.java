@@ -2,8 +2,10 @@ package Vista;
 
 import Controlador.ControladorFerreteria;
 import Modelo.Cliente;
+import Modelo.DetalleVenta;
 import Modelo.Producto;
 import Modelo.Venta;
+
 import java.util.*;
 
 public class UIFerreteria {
@@ -15,24 +17,9 @@ public class UIFerreteria {
         }
         return instance;
     }
-    /*
-    1. Buscar al cliente
-    2. verificar que el cliente no existe
-    3. Buscar producto
-    4. verificar que el producto existe
-        cantidad de productos
-    5. guardar datos del cliente y de la venta en un arrayList
-    6. mostrar ese arrayList
-    7.guardar en archivo de texto, los Productos, los clientes y las ventas creadas
-    8. 2 opciones de recuperar informacion y mostar informacion
-    9.excepciones a todo
-    * */
-
-
 //NUEVO CODIGO
     public void ingresarVenta() {
         System.out.println();
-        //VERIFICAR SI EXISTEN DATOS EN EL SISTEMA, Y PARA ESPECIFICAR QUE FALTA
         if (ControladorFerreteria.existeCliente() == null && ControladorFerreteria.existeProducto() == null) {
             System.out.println("No existen Datos en el sistema");
             return;
@@ -47,29 +34,24 @@ public class UIFerreteria {
                 }
             }
         }
-        int totalCompra=0;
         int op;
-        System.out.println("Ingrese el rut del cliente");
+        System.out.println("Ingrese el rut del cliente:");
         String rut=sc.next();
-        //PARA VER SI EL RUT QUE INGRESO ESTA EN EL SISTEMA
         while(ControladorFerreteria.buscarCliente(rut)==null){
-            System.out.println();
             System.out.println("No existen clientes con ese rut");
             System.out.println("Ingrese de nuevo");
             System.out.print("RUT: ");
             rut=sc.next();
         }
-        System.out.println("Ingrese el codigo de la venta");
+        System.out.println("Ingrese el codigo de la venta:");
         int codVenta=sc.nextInt();
-        System.out.println("Ingrese la fecha de la venta");
+        System.out.println("Ingrese la fecha de la venta:");
         String fecha=sc.next();
 
         do{
             System.out.println("Ingrese el codigo del producto");
             int codProducto=sc.nextInt();
-            //PARA VER SI EL CODIGO ESTA EN EL SISTEMA
             while(ControladorFerreteria.buscarProducto(codProducto)==null){
-                System.out.println();
                 System.out.println("No existen productos con ese codigo");
                 System.out.println("Ingrese de nuevo: ");
                 System.out.print("Codigo producto: ");
@@ -77,16 +59,14 @@ public class UIFerreteria {
             }
             System.out.print("Ingrese la cantidad: ");
             int cantidadProductos=sc.nextInt();
-            if(ControladorFerreteria.CantidadProductos(codProducto,cantidadProductos)==null){
-                System.out.println("Error, cantidad solicitada no disponible");
-                System.out.println("*****Cancelando Venta*****");
-                return;
-            }
-            //SE GUARDA EL TOTAL DE LA COMPRA ACUMULADA
-            totalCompra+=ControladorFerreteria.totalCompra(codProducto,cantidadProductos);
 
-           /* Venta ventas = new Venta(codVenta,ControladorFerreteria.buscarCliente(rut),ControladorFerreteria.buscarProducto(codProducto),fecha );
-            ControladorFerreteria.getInstance().crearVenta(ventas);*/
+            Producto productos = ControladorFerreteria.buscarProducto(codProducto);
+            DetalleVenta detalle = new DetalleVenta(cantidadProductos, productos);
+            ControladorFerreteria.getInstance().creaDetalle(detalle);
+
+            Cliente cliente = ControladorFerreteria.buscarCliente(rut);
+            Venta miVenta = new Venta(codVenta, cliente, fecha, detalle);
+            ControladorFerreteria.getInstance().crearVenta(miVenta);
 
             System.out.println("¿Añadir nuevo producto a la compra?");
             System.out.println("1- Si      2-No");
@@ -97,15 +77,15 @@ public class UIFerreteria {
                 op=sc.nextInt();
             }
         }while(op!=2);
+        System.out.println();
     }
     public void listarVentas(){
-        System.out.println("Aun no jiji");
-
+        System.out.println();
+        System.out.println("***LISTADO DE VENTAS****");
+        ControladorFerreteria.getInstance().listarVentas();
     }
     //HASTA AQUI
     public void menu(){
-        ControladorFerreteria.getInstance().leerClientes();
-        ControladorFerreteria.getInstance().leerProductos();
         int opcion;
         do {
             System.out.println();
@@ -118,8 +98,8 @@ public class UIFerreteria {
 
             System.out.println("5.- Ingresar venta");
             System.out.println("6.- Listar ventas");
-            System.out.println("7.- Guardar Clientes");
-            System.out.println("8.- Guardar  Productos");
+            System.out.println("7.- Guardar Datos");
+            System.out.println("8. -Cargar Datos");
 
             System.out.println("9.- Salir");
             System.out.print("Ingrese opción: ");
@@ -149,10 +129,10 @@ public class UIFerreteria {
                         listarVentas();
                         break;
                     case 7:
-                        ControladorFerreteria.getInstance().guardarClientes();
+                        ControladorFerreteria.getInstance().guardarDatos();
                         break;
                     case 8:
-                        ControladorFerreteria.getInstance().guardarProductos();
+                        ControladorFerreteria.getInstance().leerDatos();
                         break;
                     case 9:
                         cerrarPrograma();
@@ -222,9 +202,7 @@ public class UIFerreteria {
                 System.out.println("Ingrese de nuevo");
             }
         } while(repetir);
-        System.out.print("Cantidad: ");
-        int cantidad=sc.nextInt();
-        Producto nuevoProducto = new Producto(cod, marca, descripcion, prec, cantidad);
+        Producto nuevoProducto = new Producto(cod, marca, descripcion, prec);
         ControladorFerreteria.getInstance().creaProducto(nuevoProducto);
         System.out.println("Producto creado con exito!!!!");
     }
@@ -232,27 +210,28 @@ public class UIFerreteria {
     private void ListaProductos(){
         System.out.println();
         System.out.println("***LISTADO DE PRODUCTOS****");
-        System.out.printf("%-25s %-25s %-25s %-25s %-25s %n", "Codigo", "MARCA", "DESCRIPCIÓN", "PRECIO", "CANTIDAD");
+        System.out.printf("%-25s %-25s %-25s %-25s %n", "Codigo", "MARCA", "DESCRIPCIÓN", "PRECIO");
         Producto[] listaProductos = ControladorFerreteria.getInstance().listaProductos();
         for(int i =0; i<listaProductos.length; i++){
-            System.out.printf("%-25d %-25s %-25s %-25d %-25d %n", listaProductos[i].getCodigo(), listaProductos[i].getMarca(), listaProductos[i].getDescripcion(), listaProductos[i].getPrecio(), listaProductos[i].getCantidad());
+            System.out.printf("%-25d %-25s %-25s %-25d %n", listaProductos[i].getCodigo(), listaProductos[i].getMarca(), listaProductos[i].getDescripcion(), listaProductos[i].getPrecio());
         }
     }
 
     public void ListaClientes(){
         System.out.println();
         System.out.println("**** LISTADO DE CLIENTES ****");
-        System.out.printf("%-25s %-25s %-35s %-25s %n","RUT", "NOMBRE", "DIRECCIÓN", "TELEFONO");
+        System.out.printf("%-25s %-30s %-35s %-25s %n","RUT", "NOMBRE", "DIRECCIÓN", "TELEFONO");
         Cliente[] listaClientes = ControladorFerreteria.getInstance().listaClientes();
         for(int i = 0; i<listaClientes.length; i++){
-            System.out.printf("%-25s %-25s %-35s %-25s %n",listaClientes[i].getRut(), listaClientes[i].getNombre(), listaClientes[i].getDireccion(), listaClientes[i].getTelefono());
+            System.out.printf("%-25s %-30s %-35s %-25s %n",listaClientes[i].getRut(), listaClientes[i].getNombre(), listaClientes[i].getDireccion(), listaClientes[i].getTelefono());
         }
     }
     public void cerrarPrograma(){
         int tiempoInicial = 3;
+        System.out.println();
         System.out.println("***Cerrando programa***");
-        for (int i = tiempoInicial; i >= 0; i--) {
-            System.out.print("   "+i+" ");
+        for (int i = tiempoInicial; i > 0; i--) {
+            System.out.print("   "+i+"  ");
             try {
                 Thread.sleep(1000); // Pausa de 1 segundo
             } catch (InterruptedException e) {
