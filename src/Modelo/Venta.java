@@ -47,24 +47,12 @@ public class Venta {
         this.detalleVentas = detalleVentas;
     }
     public void dibujaFactura(){
+
         System.out.println();
         System.out.println("N° DE FACTURA: "+codigoVenta);
         System.out.println("SE VENDIO A: "+cliente.toString());
         System.out.println("FECHA DE VENTA: "+fecha);
         System.out.println("DETALLE DE LO VENDIDO: ");
-        System.out.println();
-        int acumulado = 0;
-
-        for(DetalleVenta detalle : detalleVentas){
-            Producto auxiliar = detalle.getElProducto();
-            int totalLinea =  auxiliar.getPrecio() * detalle.getCantidad();
-            System.out.println("Cantidad: "+detalle.getCantidad()+" "+auxiliar.getDescripcion()+"total:"+totalLinea);
-            acumulado=acumulado+totalLinea;
-        }
-        System.out.println("Total NETO: "+acumulado);
-        double iva = acumulado* 0.19;
-        System.out.println("IVA: "+iva);
-        System.out.println("TOTAL : $"+(acumulado+iva));
         System.out.println();
     }
 

@@ -32,7 +32,8 @@ public class ControladorFerreteria {
         productos.add(nuevo);
     }
     public void crearVenta(Venta nueva){ventas.add(nueva);}
-    public void creaDetalle(DetalleVenta nuevo){detalle.add(nuevo);}
+    public void creaDetalle(DetalleVenta nuevo){detalle.add(nuevo);
+    }
 
     //Listar ArrayList
     public Cliente[] listaClientes(){
@@ -55,9 +56,25 @@ public class ControladorFerreteria {
         return listaProductos;
     }
     public void listarVentas(){
-        for(Venta misVentas: ventas){
-            misVentas.dibujaFactura();
+        for(Venta misVentasClientes: ventas){
+            misVentasClientes.dibujaFactura();
+            listarDetalle();
         }
+    }
+    public void listarDetalle(){
+        int acumulado=0;
+        for(DetalleVenta detalle : detalle){
+            Producto auxiliar = detalle.getElProducto();
+            int totalLinea =  auxiliar.getPrecio() * detalle.getCantidad();
+            System.out.println("Cantidad: "+detalle.getCantidad()+"  "+auxiliar.getDescripcion()+"   total:"+totalLinea);
+            acumulado=acumulado+totalLinea;
+        }
+        System.out.println();
+        System.out.println("Total NETO: "+acumulado);
+        double iva = acumulado* 0.19;
+        System.out.println("IVA: "+iva);
+        System.out.println("TOTAL : $"+(acumulado+iva));
+        System.out.println();
     }
 
     //Buscar o ver si existe

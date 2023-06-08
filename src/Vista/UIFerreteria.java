@@ -47,7 +47,7 @@ public class UIFerreteria {
         int codVenta=sc.nextInt();
         System.out.println("Ingrese la fecha de la venta:");
         String fecha=sc.next();
-
+        int i=0;
         do{
             System.out.println("Ingrese el codigo del producto");
             int codProducto=sc.nextInt();
@@ -76,6 +76,7 @@ public class UIFerreteria {
                 System.out.println("Ingrese de nuevo");
                 op=sc.nextInt();
             }
+            i++;
         }while(op!=2);
         System.out.println();
     }
