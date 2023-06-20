@@ -1,7 +1,6 @@
 package Modelo;
 
 public class Cliente {
-
     private String rut;
     private String nombre;
     private String direccion;
@@ -46,6 +45,6 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{"+"rut='"+rut+'\''+",nombre='"+nombre+'\''+",direccion='"+direccion+'\''+",telefono='"+telefono+'\''+'}';
+        return "Cliente= "+rut+ " - "+nombre+" - "+direccion+" - "+telefono+"  ";
     }
 }

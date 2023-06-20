@@ -1,7 +1,5 @@
 package Modelo;
-
 public class Producto {
-
     private int codigo;
     private String marca;
     private String descripcion;
@@ -13,7 +11,6 @@ public class Producto {
         this.descripcion = descripcion;
         this.precio = precio;
     }
-
     public int getCodigo() {
         return codigo;
     }

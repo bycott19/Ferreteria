@@ -3,17 +3,16 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Venta {
-
     private int codigoVenta;
     private Cliente cliente;
     private String fecha;
-    private ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
+    ArrayList<DetalleVenta> detalleVentas = new ArrayList<>();
 
-    public Venta(int codigoVenta, Cliente cliente, String fecha, DetalleVenta detalleVentas) {
+    public Venta(int codigoVenta, Cliente cliente, String fecha, ArrayList<DetalleVenta> detalleVentas) {
         this.codigoVenta = codigoVenta;
         this.cliente = cliente;
         this.fecha = fecha;
-        ArrayList<DetalleVenta> detalleVentas1= this.detalleVentas;
+        this.detalleVentas = detalleVentas;
     }
 
     public Cliente getCliente() {
@@ -42,18 +41,4 @@ public class Venta {
     public ArrayList<DetalleVenta> getDetalleVentas() {
         return detalleVentas;
     }
-
-    public void setDetalleVentas(ArrayList<DetalleVenta> detalleVentas) {
-        this.detalleVentas = detalleVentas;
-    }
-    public void dibujaFactura(){
-
-        System.out.println();
-        System.out.println("N° DE FACTURA: "+codigoVenta);
-        System.out.println("SE VENDIO A: "+cliente.toString());
-        System.out.println("FECHA DE VENTA: "+fecha);
-        System.out.println("DETALLE DE LO VENDIDO: ");
-        System.out.println();
-    }
-
 }
