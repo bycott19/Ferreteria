@@ -1,5 +1,5 @@
 package Modelo;
-public class Producto {
+public class Producto{
     private int codigo;
     private String marca;
     private String descripcion;

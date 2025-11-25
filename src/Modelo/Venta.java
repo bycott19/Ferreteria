@@ -2,7 +2,7 @@ package Modelo;
 
 import java.util.ArrayList;
 
-public class Venta {
+public class Venta{
     private int codigoVenta;
     private Cliente cliente;
     private String fecha;

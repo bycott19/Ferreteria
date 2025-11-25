@@ -1,5 +1,6 @@
 package Modelo;
-public class DetalleVenta {
+
+public class DetalleVenta{
     private int cantidadCompra;
     private Producto elProducto;
 

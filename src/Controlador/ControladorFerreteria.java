@@ -5,13 +5,11 @@ import Modelo.DetalleVenta;
 import Modelo.Producto;
 import Modelo.Venta;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ControladorFerreteria {
+public class ControladorFerreteria{
     private static ControladorFerreteria instance = null;
     private ControladorFerreteria(){}
     public static ControladorFerreteria getInstance() {
@@ -94,6 +92,7 @@ public class ControladorFerreteria {
     }
 
     //Archivos de texto
+
     public void leerDatos(){
         try{
             Scanner sc1 = new Scanner(new File("clientes.txt"));

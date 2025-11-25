@@ -61,9 +61,11 @@ public class UIFerreteria {
                     listarVentas();
                     break;
                 case 7:
+                    //ControladorFerreteria.getInstance().escribirDatos();
                     ControladorFerreteria.getInstance().guardarDatos();
                     break;
                 case 8:
+                    //ControladorFerreteria.getInstance().leerDatosSerializado();
                     ControladorFerreteria.getInstance().leerDatos();
                     break;
                 case 9:
