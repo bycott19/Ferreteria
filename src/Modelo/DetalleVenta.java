@@ -1,26 +1,28 @@
 package Modelo;
 
-public class DetalleVenta{
-    private int cantidadCompra;
-    private Producto elProducto;
+public class DetalleVenta {
 
-    public DetalleVenta(int cantidadCompra, Producto elProducto){
-        this.cantidadCompra=cantidadCompra;
-        this.elProducto=elProducto;
+    private int cantidadCompra;
+    private Producto producto;
+
+    public DetalleVenta(int cantidadCompra, Producto producto) {
+        this.cantidadCompra = cantidadCompra;
+        this.producto = producto;
     }
-    public int getCantidad() {
+
+    public int getCantidadCompra() {
         return cantidadCompra;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidadCompra = cantidad;
+    public void setCantidadCompra(int cantidadCompra) {
+        this.cantidadCompra = cantidadCompra;
     }
 
-    public Producto getElProducto() {
-        return elProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setElProducto(Producto elProducto) {
-        this.elProducto = elProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 }

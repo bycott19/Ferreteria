@@ -1,16 +1,19 @@
 package Modelo;
-public class Producto{
+
+public class Producto {
+
     private int codigo;
     private String marca;
     private String descripcion;
     private int precio;
 
-    public Producto(int codigo, String marca, String descripcion, int precio){
+    public Producto(int codigo, String marca, String descripcion, int precio) {
         this.codigo = codigo;
         this.marca = marca;
         this.descripcion = descripcion;
         this.precio = precio;
     }
+
     public int getCodigo() {
         return codigo;
     }
@@ -19,16 +22,16 @@ public class Producto{
         this.codigo = codigo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
     public String getMarca() {
         return marca;
     }
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
@@ -42,4 +45,10 @@ public class Producto{
     public void setPrecio(int precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "codigo=" + codigo + ", marca=" + marca + ", descripcion=" + descripcion + ", precio=" + precio + '}';
+    }
+
 }

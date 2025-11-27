@@ -5,22 +5,28 @@ import Modelo.DetalleVenta;
 import Modelo.Producto;
 import Modelo.Venta;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ControladorFerreteria{
+public class ControladorFerreteria {
+
     private static ControladorFerreteria instance = null;
+
     private ControladorFerreteria(){}
-    public static ControladorFerreteria getInstance() {
-        if(instance==null){
+
+    public static ControladorFerreteria getInstance(){
+        if(instance == null){
             instance = new ControladorFerreteria();
         }
         return instance;
     }
+
     static ArrayList<Cliente> clientes = new ArrayList();
-    static ArrayList <Producto> productos = new ArrayList();
-    static ArrayList <Venta> ventas = new ArrayList();
+    static ArrayList<Producto> productos = new ArrayList();
+    static ArrayList<Venta> ventas = new ArrayList();
 
     public void creaCliente(Cliente nuevo){
         clientes.add(nuevo);
@@ -28,8 +34,8 @@ public class ControladorFerreteria{
     public void creaProducto(Producto nuevo){
         productos.add(nuevo);
     }
-    public void crearVenta(Venta nueva){
-        ventas.add(nueva);
+    public void creaVenta(Venta nuevo){
+        ventas.add(nuevo);
     }
 
     public Venta[] listaVentas(){
@@ -43,7 +49,7 @@ public class ControladorFerreteria{
     }
     public Cliente[] listaClientes(){
         Cliente[] listaClientes = new Cliente[clientes.size()];
-        int i = 0;
+        int i=0;
         for(Cliente cliente : clientes){
             listaClientes[i] = cliente;
             i++;
@@ -52,15 +58,14 @@ public class ControladorFerreteria{
     }
     public Producto[] listaProductos(){
         Producto[] listaProductos = new Producto[productos.size()];
-        int i = 0;
+        int i=0;
         for(Producto producto : productos){
             listaProductos[i] = producto;
             i++;
         }
         return listaProductos;
     }
-
-    public static Cliente buscarCliente(String rut){
+    public Cliente buscarCliente(String rut){
         for(Cliente misClientes : clientes){
             if(misClientes.getRut().equalsIgnoreCase(rut)){
                 return misClientes;
@@ -68,7 +73,7 @@ public class ControladorFerreteria{
         }
         return null;
     }
-    public static Producto buscarProducto(int codProducto){
+    public Producto buscarProducto(int codProducto){
         for(Producto misProductos : productos) {
             if(misProductos.getCodigo()==codProducto){
                 return misProductos;
@@ -77,14 +82,14 @@ public class ControladorFerreteria{
         return null;
     }
 
-    public static ArrayList<Cliente> existeCliente() {
+    public ArrayList<Cliente> existeCliente() {
         if (clientes.size() != 0) {
             return clientes;
         }
 
         return null;
     }
-    public static ArrayList<Producto> existeProducto(){
+    public ArrayList<Producto> existeProducto(){
         if(productos.size()!=0){
             return productos;
         }
@@ -137,8 +142,8 @@ public class ControladorFerreteria{
             }
             for(Venta venta : ventas){
                 writer3.write(venta.getCodigoVenta() + ";" + venta.getCliente().getRut() + ";" + venta.getFecha());
-                for(DetalleVenta detalle : venta.getDetalleVentas()){
-                    writer3.write(";" + detalle.getCantidad() + ";" + detalle.getElProducto().getCodigo());
+                for(DetalleVenta detalle : venta.getDetalleVenta()){
+                    writer3.write(";" + detalle.getCantidadCompra()+ ";" + detalle.getProducto().getCodigo());
                 }
                 writer3.write("\n");
             }
